@@ -19,9 +19,5 @@
 
 
 @interface PrivilegesTile : NSObject <NSDockTilePlugIn>
-
-//- (void) togglePrivileges;
-//- (NSMenu*)dockMenu;
-//+ (void) lockScreenStatic;
-
+ 
 @end

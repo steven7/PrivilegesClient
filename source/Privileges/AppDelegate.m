@@ -373,13 +373,8 @@ id thisClass;
 #ifdef DEBUG
     NSLog(@"Pluralsight: The helper tool (%@) is up and running", helperVersion);
 #endif
-    
-//    NSString *userName = NSUserName();
-//    uint groupID = [MTIdentity gidFromGroupName:ADMIN_GROUP_NAME];
-//    BOOL isAdmin = [MTIdentity getGroupMembershipForUser:userName groupID:groupID error:nil];
-	
+     
     // run the privileged task
-    //[self changeAdminGroup:userName group:groupID remove:isAdmin];
 	
 	[self togglePrivileges];
 }
@@ -673,8 +668,6 @@ void setHandler() {
 #ifdef DEBUG
 		NSLog(@"Pluralsight: Setting timer");
 #endif
-		// NSString *label = [NSString stringWithFormat:@"%ld", (long)minutesLeft ];
-		// [_dockTile setBadgeLabel: label];
 		
 		// initialize the toggle timer ...
 		_toggleTimer = [NSTimer scheduledTimerWithTimeInterval:60
@@ -774,22 +767,6 @@ void setHandler() {
 			// add the "privileges" item
 			_theDockMenu = [[NSMenu alloc] init];
 			
-//			NSMenuItem *privilegesItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"toggleMenuItem", @"Localizable", _mainBundle, nil)
-//																	action:@selector(togglePrivilegesWithoutTimeout)
-//															 keyEquivalent:@""];
-//			[privilegesItem setTarget:self];
-//			[_theDockMenu insertItem:privilegesItem atIndex:0];
-//
-//			// insert a separator
-//			[_theDockMenu insertItem:[NSMenuItem separatorItem] atIndex:1];
-			
-//			// add the "lock screen" item
-//			NSMenuItem *lockScreenItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"lockScreenMenuItem", @"Localizable", _mainBundle, nil)
-//																	action:@selector(lockScreen)
-//															 keyEquivalent:@""];
-//			[lockScreenItem setTarget:self];
-//			[_theDockMenu insertItem:lockScreenItem atIndex:2];
-			
 			// add the "show login window" item
 			NSMenuItem *loginWindowItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"loginWindowMenuItem", @"Localizable", _mainBundle, nil)
 																	 action:@selector(showLoginWindow)
@@ -803,82 +780,6 @@ void setHandler() {
 	
 	return _theDockMenu;
 }
-
-/*
-- (void)togglePrivilegesWithoutTimeout
-{
-	
-	// if there is currently a timer running, reset it
-	[self resetToggleTimer];
-	
-	NSError *userError = nil;
-	BOOL isAdmin = [self checkAdminPrivilegesForUser:NSUserName() error:&userError];
-	
-	if (userError == nil) {
-		NSTask *theTask = [[NSTask alloc] init];
-		[theTask setLaunchPath:_cliPath];
-		
-		if (isAdmin) {
-			
-			[theTask setArguments:[NSArray arrayWithObject:@"--remove"]];
-			[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"DockToggle_WithoutTimeout"];
-			
-		} else {
-			
-			[theTask setArguments:[NSArray arrayWithObject:@"--add"]];
-			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"DockToggle_WithoutTimeout"];
-			
-		}
-		
-		[theTask launch];
-	}
-	
-	[_mainWindow orderOut:self];
- 
-}
-*/
-
-//- (void)lockScreen
-//{
-//	//SACLockScreenImmediate();
-//	[PrivilegesTile lockScreenStatic];
-//}
-
-/*
-- (void)lockScreen
-{
-	MDSendAppleEventToSystemProcess(kAESleep);
-}
-
-// this locks the screen
-OSStatus MDSendAppleEventToSystemProcess(AEEventID eventToSendID)
-{
-	AEAddressDesc                    targetDesc;
-	static const ProcessSerialNumber kPSNOfSystemProcess = {0, kSystemProcess};
-	AppleEvent                       eventReply          = {typeNull, NULL};
-	AppleEvent                       eventToSend         = {typeNull, NULL};
-	
-	OSStatus status = AECreateDesc(typeProcessSerialNumber,
-								   &kPSNOfSystemProcess, sizeof(kPSNOfSystemProcess), &targetDesc);
-	
-	if ( status != noErr ) return status;
-	
-	status = AECreateAppleEvent(kCoreEventClass, eventToSendID,
-								&targetDesc, kAutoGenerateReturnID, kAnyTransactionID, &eventToSend);
-	
-	AEDisposeDesc(&targetDesc);
-	
-	if ( status != noErr ) return status;
-	
-	status = AESendMessage(&eventToSend, &eventReply,
-						   kAENormalPriority, kAEDefaultTimeout);
-	
-	AEDisposeDesc(&eventToSend);
-	if ( status != noErr ) return status;
-	AEDisposeDesc(&eventReply);
-	return status;
-}
-*/
 
 - (void)showLoginWindow
 {
